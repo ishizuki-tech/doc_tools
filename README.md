@@ -2,7 +2,7 @@
 
 > **Convert between Stata `.dta`, delimited text `.txt`, XML, and Excel → text using lightweight Python scripts.**
 
-[**English README**](README.en.md) · [**日本語 README**](README.ja.md)
+[**English README**](README_EN.md) · [**日本語 README**](README_JA.md)
 
 ---
 
