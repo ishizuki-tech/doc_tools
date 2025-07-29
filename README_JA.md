@@ -3,8 +3,6 @@
 **.dta ⇄ .txt / .xml / .dta / .xls(x) → .txt** を行うシンプルな Python スクリプト集です。
 Pandas を使って Stata／テキスト／XML／Excel 間の相互変換を手早く行えます。
 
-> **TL;DR (English):** A small toolkit of Python scripts to convert between Stata `.dta`, delimited text `.txt`, XML, and Excel to text. Requires Python 3.9+ and pandas. See **Usage** below for one-line commands.
-
 ---
 
 ## 目次
