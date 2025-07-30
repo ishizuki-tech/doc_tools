@@ -1,63 +1,84 @@
-# Data Converter Scripts
+# Data Converter Scripts (English)
 
-A small toolkit of Python scripts that convert between Stata `.dta`, delimited text `.txt`, XML, and Excel → text. Built on top of **pandas** for fast, practical data wrangling.
+Lightweight Python scripts for converting between **Stata `.dta`**, **delimited text `.txt`**, **XML**, and **Excel**.
+Each script saves to a default output folder **`./out_files`** located **next to the script** (auto‑created).
 
 ---
 
 ## Table of Contents
 
-* [What’s Included](#whats-included)
+* [Tools](#tools)
+* [Output Rules](#output-rules)
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Usage](#usage)
 
   * [1) .dta → .txt](#1-dta--txt)
   * [2) .dta → .xml](#2-dta--xml)
-  * [3) .txt → .dta](#3-txt--dta)
-  * [4) .xls(x) → .txt](#4-xlsx--txt)
-* [Options & Caveats](#options--caveats)
-* [Batch Examples](#batch-examples)
+  * [3) .txtcsv → .dta](#3-txtcsv--dta)
+  * [4) .xlsxlsxxlsmxlsb → .txt](#4-xlsxlsxxlsmxlsb--txt)
+  * [5) .dta → .xlsx/.xls](#5-dta--xlsxxls)
+* [Options & Notes](#options--notes)
+* [Batch Conversion Examples](#batch-conversion-examples)
 * [Troubleshooting](#troubleshooting)
 * [FAQ](#faq)
 * [License](#license)
+* [Using From Python](#using-from-python)
 
 ---
 
-## What’s Included
+## Tools
 
-| Script                  | Conversion                      | Default behavior                  |
-| ----------------------- | ------------------------------- | --------------------------------- |
-| `convert_dta_to_txt.py` | Stata `.dta` → delimited `.txt` | Delimiter: **tab** (`\t`)         |
-| `convert_dta_to_xml.py` | Stata `.dta` → `.xml`           | Root: `<data>`, Row: `<record>`   |
-| `convert_txt_to_dta.py` | Delimited `.txt` → Stata `.dta` | Non‑latin‑1 chars are **removed** |
-| `convert_xls_to_txt.py` | Excel `.xls/.xlsx` → `.txt`     | Delimiter: **tab** (`\t`)         |
+| Script                  | Conversion                              | Default / Key Behavior                                                     |
+| ----------------------- | --------------------------------------- | -------------------------------------------------------------------------- |
+| `convert_dta_to_txt.py` | Stata `.dta` → delimited text `.txt`    | Tab delimiter (`\t`), UTF‑8 output                                         |
+| `convert_dta_to_xml.py` | Stata `.dta` → `.xml`                   | `<data>/<record>` with safe `<field name="col">value</field>` structure    |
+| `convert_txt_to_dta.py` | `.txt/.csv` → Stata `.dta`              | **Stata v118 (14+) Unicode**, Stata‑safe var names, long strings as strL   |
+| `convert_xls_to_txt.py` | Excel `.xls/.xlsx/.xlsm/.xlsb` → `.txt` | Engine auto‑selected by extension, default TSV (`\t`), `sheet_name=0`      |
+| `convert_dta_to_xls.py` | Stata `.dta` → `.xlsx` / `.xls`         | Default `.xlsx` via openpyxl; `.xls` via xlwt, **65,536 rows/sheet split** |
 
-Each script is standalone with a simple CLI: **input file** and optional **output file**.
+> All scripts are **standalone** and share the same simple CLI: `python script.py <input_path> [output_path]`.
+
+---
+
+## Output Rules
+
+* If **`output_path` is omitted** → write to `./out_files/<input_base>.<ext>` next to the script.
+* If **`output_path` is a directory** → write `<dir>/<input_base>.<ext>`.
+* If **`output_path` is a file** → write exactly there; if it lacks an extension, the script appends the expected one.
+* `out_files` is **auto‑created**.
 
 ---
 
 ## Requirements
 
-* **Python**: 3.9+ recommended
-* **Packages**: `pandas`
-* **Excel support**:
+* **Python** 3.9+ recommended
+* **Core**: `pandas`
+* **Recommended for Stata**: `pyreadstat` (robust/fast `.dta` IO)
+* **Excel engines** (install as needed):
 
-  * `.xlsx`: `openpyxl`
-  * `.xls`: `xlrd` (classic `.xls` only)
-
-> Note: `pandas` handles Stata read/write via built-ins; no extra Stata-specific package is required.
+  * `openpyxl` — read/write `.xlsx/.xlsm`
+  * `xlrd` — read legacy `.xls` (v2.0 no longer reads `.xlsx`)
+  * `pyxlsb` — read `.xlsb`
+  * `xlwt` — write legacy `.xls` (**65,536 rows/sheet** limit)
 
 ---
 
 ## Installation
 
 ```bash
-# (Optional) Create a virtual environment
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+# (Optional) virtual environment
+python3 -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 
-# Install dependencies
-pip install -U pandas openpyxl xlrd
+# Core
+pip install -U pandas pyreadstat
+
+# Excel engines (only what you need)
+pip install openpyxl   # .xlsx/.xlsm
+pip install xlrd       # .xls
+pip install pyxlsb     # .xlsb
+pip install xlwt       # write .xls
 ```
 
 ---
@@ -67,73 +88,104 @@ pip install -U pandas openpyxl xlrd
 ### 1) .dta → .txt
 
 ```bash
-python convert_dta_to_txt.py input.dta            # writes: input.txt
-python convert_dta_to_txt.py input.dta out.txt    # custom output name
+python convert_dta_to_txt.py data/input.dta
+# => ./out_files/input.txt
+
+python convert_dta_to_txt.py data/input.dta ./exports/
+# => ./exports/input.txt
 ```
 
-* Default delimiter: **tab** (`\t`).
-* Output is UTF‑8 encoded.
+* Default is **TSV (tab‑delimited)**. For CSV, change `delimiter=","` in the script or call the function directly.
 
 ---
 
 ### 2) .dta → .xml
 
 ```bash
-python convert_dta_to_xml.py input.dta            # writes: input.xml
-python convert_dta_to_xml.py input.dta out.xml    # custom output name
+python convert_dta_to_xml.py data/input.dta
+# => ./out_files/input.xml
+
+python convert_dta_to_xml.py data/input.dta ./exports/mydata.xml
+# => ./exports/mydata.xml
 ```
 
-* Default root element: `<data>`; each row becomes `<record>`.
-* `&`, `<`, `>` are XML‑escaped; other characters are written as UTF‑8.
+* Default structure:
+
+  ```xml
+  <data>
+    <record>
+      <field name="col">value</field>
+      ...
+    </record>
+  </data>
+  ```
+
+  This avoids invalid XML tag names caused by arbitrary column names.
+  To switch to “tag‑per‑column”, set `use_field_elements=False` in code (column names are sanitized).
 
 ---
 
-### 3) .txt → .dta
+### 3) .txt/.csv → .dta
 
 ```bash
-python convert_txt_to_dta.py input.txt            # writes: input.txt_to.dta
-python convert_txt_to_dta.py input.txt out.dta    # custom output name
+python convert_txt_to_dta.py data/input.txt
+# => ./out_files/input.dta
+
+python convert_txt_to_dta.py data/input.csv ./exports/out.dta
+# => ./exports/out.dta
 ```
 
-* Default delimiter: **tab** (`\t`).
-* To reduce Stata encoding issues, **non‑latin‑1 characters are removed** by default. Adjust the behavior in the script if you prefer replacement instead of removal.
+* Saves with **Stata v118 (Stata 14+)**, preserving **Unicode**.
+* Column names are auto‑sanitized to Stata rules (≤32 chars, `[A-Za-z_][A-Za-z0-9_]*`), ensuring uniqueness with suffixes `_1, _2, …`.
+* Original column names are kept as **variable labels** (up to 80 chars).
+* Long strings are stored as **strL** (`convert_strl=True`).
 
 ---
 
-### 4) .xls(x) → .txt
+### 4) .xls/.xlsx/.xlsm/.xlsb → .txt
 
 ```bash
-python convert_xls_to_txt.py input.xlsx           # writes: input.txt
-python convert_xls_to_txt.py input.xls out.txt    # custom output name
+python convert_xls_to_txt.py data/input.xlsx
+# => ./out_files/input.txt
+
+python convert_xls_to_txt.py data/input.xls ./exports/
+# => ./exports/input.txt
 ```
 
-* Default delimiter: **tab** (`\t`).
-* Default `sheet_name=0` (first sheet). Edit the script or call the function directly to change it.
+* Engine is auto‑selected by file extension:
+  `.xlsx/.xlsm → openpyxl`, `.xls → xlrd`, `.xlsb → pyxlsb`.
+* Default `sheet_name=0` (first sheet). Change it in code or call the function with a different name/index.
 
 ---
 
-## Options & Caveats
+### 5) .dta → .xlsx/.xls
 
-* **Delimiters**
-  The CLIs accept only input/output paths. To change the delimiter, edit the default (`delimiter="\t"`) in the script or import and call the function directly from Python.
+```bash
+python convert_dta_to_xls.py data/input.dta
+# => ./out_files/input.xlsx
 
-* **XML element names**
-  Column names with spaces/symbols might not be valid XML element names. Pre-clean or rename columns before converting.
+python convert_dta_to_xls.py data/input.dta ./exports/mydata.xls
+# => ./exports/mydata.xls   (xlwt; sheets auto‑split at 65,536 rows)
+```
 
-* **Stata format versions**
-  `pandas.to_stata()` supports multiple Stata versions via its `version` parameter. If another system can’t open your file, set an explicit version when calling from Python.
-
-* **Encoding**
-  `to_csv()` writes UTF‑8 by default. If a consumer expects a different encoding (e.g., Excel on Windows), consider `encoding='utf-8-sig'` or `encoding='cp932'`.
-
-* **Large files**
-  These scripts load data into memory. For very large datasets, consider extending them to use chunked reads/writes (`chunksize`) or streaming approaches.
+* Default output is **`.xlsx`** using **openpyxl**.
+* If the output extension is **`.xls`**, the script uses **xlwt** and **splits across sheets** when rows exceed 65,536 (`Sheet1`, `Sheet2`, …).
 
 ---
 
-## Batch Examples
+## Options & Notes
 
-**Bash (macOS/Linux):**
+* **Delimiter**: The CLI accepts only input/output paths. To change the delimiter (e.g., to CSV), edit each script’s `delimiter` default or call the function directly.
+* **Encoding**: Text outputs default to **UTF‑8**. If you must open files directly in Excel on Windows, consider `utf-8-sig` or `cp932`.
+* **Stata compatibility**: `convert_txt_to_dta.py` defaults to **v118**. If you need older Stata, lower `stata_version` (e.g., `114`)—note that Unicode support becomes limited.
+* **Large datasets**: Current implementations load into memory. For very large files, extend the scripts to use chunked IO (`chunksize`) as needed.
+* **XML tag mode**: Using column names as tags is fragile; the default `<field name="…">` form is recommended.
+
+---
+
+## Batch Conversion Examples
+
+**Bash (macOS/Linux)**
 
 ```bash
 # Convert all .dta to .txt
@@ -145,9 +197,14 @@ done
 for f in *.xlsx; do
   python convert_xls_to_txt.py "$f"
 done
+
+# Convert all .dta to .xlsx
+for f in *.dta; do
+  python convert_dta_to_xls.py "$f"
+done
 ```
 
-**PowerShell (Windows):**
+**PowerShell (Windows)**
 
 ```powershell
 # Convert all .dta to .xml
@@ -160,51 +217,71 @@ Get-ChildItem *.dta | ForEach-Object {
 
 ## Troubleshooting
 
-### “`latin-1` codec can’t encode/decode …”
+* **`permission denied` when running a script**
+  Run via Python:
 
-* **Why**: Stata containers and labels may require latin‑1 compatibility in some contexts.
-* **Fix**: The provided `convert_txt_to_dta.py` removes non‑latin‑1 characters by default. You can change the `errors="ignore"` behavior to `"replace"` or pre‑normalize text (e.g., Unicode normalization, ASCII folding) before conversion.
+  ```bash
+  python3 script.py ...
+  ```
 
-### Excel read errors (`openpyxl` / `xlrd`)
+  Or add a shebang & make it executable:
 
-* Install the appropriate engine (`openpyxl` for `.xlsx`, `xlrd` for `.xls`).
-* Verify the file isn’t corrupted and the extension matches the actual format.
+  ```bash
+  #!/usr/bin/env python3
+  chmod +x script.py
+  ./script.py ...
+  ```
 
-### Incorrect column types
+* **Virtualenv activation (bash/zsh)**
+  `source .venv/bin/activate` (Windows: `.venv\Scripts\activate`)
 
-* `pandas` infers types automatically. If you need strict types, pre‑cast with `astype`, parse dates via `parse_dates`, or extend the scripts to accept `dtype`/parse options.
+* **Shebang error due to Windows line endings** (`env: python3\r: No such file or directory`)
+  Convert to LF:
+
+  ```bash
+  sed -i '' $'s/\r$//' script.py   # macOS
+  # or: dos2unix script.py
+  ```
+
+* **Missing Excel engine**
+  Install the appropriate engine from **Requirements** (e.g., `pip install openpyxl`).
+
+* **Unexpected data types**
+  Pandas’ type inference may differ from expectations. Extend scripts to pass `dtype`, `parse_dates`, etc., as needed.
 
 ---
 
 ## FAQ
 
-**Q: Can I change the delimiter to comma or pipe?**
-A: Yes. Edit `delimiter="\t"` in the script or import the function and pass a different `delimiter`.
+**Q. I want comma‑ or pipe‑delimited output instead of tabs.**
+A. Change `delimiter="\t"` in the script (or call the function directly with your delimiter).
 
-**Q: Can I change the XML root/row element names?**
-A: Yes. Edit `root_element` / `row_element` defaults or call `convert_dta_to_xml(...)` with custom values.
+**Q. I want different XML element names.**
+A. Edit `root_element="data"` and `row_element="record"` in `convert_dta_to_xml.py`. To use column names as tags, set `use_field_elements=False` (column names are sanitized).
 
-**Q: How do I handle very large files?**
-A: Extend the scripts to use chunked processing and/or write in parts. The current implementations load the entire file into memory.
+**Q. I must support older Stata.**
+A. Lower `stata_version` in `convert_txt_to_dta.py` (e.g., `114`). Unicode handling will be more limited.
 
 ---
 
-## Direct Python Usage
+## License
+
+MIT License (see `LICENSE`).
+
+---
+
+## Using From Python
 
 ```python
 from convert_dta_to_txt import convert_dta_to_txt
 from convert_dta_to_xml import convert_dta_to_xml
 from convert_txt_to_dta import convert_txt_to_dta
 from convert_xls_to_txt import convert_xls_to_txt
+from convert_dta_to_xls import convert_dta_to_excel  # function name example
 
-convert_dta_to_txt("input.dta", "out.tsv", delimiter="\t")
-convert_dta_to_xml("input.dta", "out.xml", root_element="rows", row_element="row")
-convert_txt_to_dta("input.tsv", "out.dta", delimiter="\t")
-convert_xls_to_txt("input.xlsx", "out.txt", sheet_name=0, delimiter="|")
+convert_dta_to_txt("input.dta", "./out_files/out.tsv", delimiter="\t")
+convert_dta_to_xml("input.dta", "./out_files/out.xml", root_element="rows", row_element="row")
+convert_txt_to_dta("input.csv", "./out_files/out.dta", delimiter=",")
+convert_xls_to_txt("input.xlsx", "./out_files/out.txt", sheet_name=0, delimiter="|")
+convert_dta_to_excel("input.dta", "./out_files/out.xlsx")  # .xls is selected by extension
 ```
-
----
-
-## License
-
-**MIT License** (add a `LICENSE` file if needed)

@@ -208,5 +208,5 @@ marimo/_lsp/
 __marimo__/
 
 # Ignore custom data directories
-dataversr_files/
+out_files/
 original_data/
