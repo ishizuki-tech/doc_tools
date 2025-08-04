@@ -10,13 +10,14 @@ def convert_dta_to_excel(input_path,
                          default_out_dir="out_files"):
     """Convert Stata .dta to Excel (.xlsx or .xls).
     デフォルト出力先: スクリプトと同じ階層の ./out_files
+    Default output destination is ./out_files
     """
-    # 入力チェック
+    # 入力チェック / Input validation 
     if not os.path.exists(input_path):
         print(f"❌ Input not found: {input_path}")
         return
 
-    # .dta 読み込み
+    # .dta 読み込み / import
     try:
         df = pd.read_stata(input_path)
     except Exception as e:
@@ -24,6 +25,7 @@ def convert_dta_to_excel(input_path,
         return
 
     # スクリプトの場所（__file__ が無い実行環境へのフォールバックあり）
+    # Script location (with fallbacks for environments without __file__) 
     try:
         script_dir = os.path.dirname(os.path.abspath(__file__))
     except NameError:
@@ -32,21 +34,23 @@ def convert_dta_to_excel(input_path,
     in_base = os.path.splitext(os.path.basename(os.path.abspath(input_path)))[0]
 
     # 出力パスの決定（デフォルトは <script_dir>/out_files/<元名>.xlsx）
+    # Determine the output path (default is <script_dir>/out_files/<original name>.xlsx)
     if output_path is None:
         out_dir = os.path.join(script_dir, default_out_dir)
         os.makedirs(out_dir, exist_ok=True)
         output_path = os.path.join(out_dir, in_base + default_ext)
     else:
         # ディレクトリが渡された場合（既存ディレクトリ or 末尾が / のパス）→ その中に保存
+        # If a directory is passed (it's an existing directory or a path ending in /), save it there.
         if os.path.isdir(output_path) or output_path.endswith(os.sep):
             os.makedirs(output_path, exist_ok=True)
             output_path = os.path.join(output_path, in_base + default_ext)
         else:
-            # 親ディレクトリを作成
+            # 親ディレクトリを作成 / Create the parent directory
             parent = os.path.dirname(os.path.abspath(output_path)) or "."
             os.makedirs(parent, exist_ok=True)
 
-    # 拡張子でエンジンを選択
+    # 拡張子でエンジンを選択 / select the engine based upon the file extension
     ext = os.path.splitext(output_path)[1].lower()
     if not ext:
         ext = default_ext
@@ -61,10 +65,10 @@ def convert_dta_to_excel(input_path,
             print(f"❌ Unsupported extension: {ext}. Use .xlsx or .xls")
             return
 
-    # 書き出し
+    # 書き出し / Export
     try:
         if ext == ".xls":
-            # .xls は 65,536 行/シート制限
+            # .xls は 65,536 行/シート制限 / .xls has a limit of 65k rows in each sheet
             max_rows = 65536
             with pd.ExcelWriter(output_path, engine=engine) as writer:
                 if len(df) <= max_rows:
@@ -75,7 +79,7 @@ def convert_dta_to_excel(input_path,
                         sname = f"{sheet_name}_{i//max_rows + 1}"
                         part.to_excel(writer, sheet_name=sname, index=False)
         else:
-            # .xlsx（推奨）
+            # .xlsx（推奨）/ This is the recommended export file type
             with pd.ExcelWriter(output_path, engine=engine) as writer:
                 df.to_excel(writer, sheet_name=sheet_name, index=False)
 
@@ -86,10 +90,10 @@ def convert_dta_to_excel(input_path,
     except Exception as e:
         print(f"❌ Error writing Excel file: {e}")
 
-# コマンドライン対応
+# コマンドライン対応 / Command line support
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python convert_dta_to_excel.py input_file.dta [output_file.xlsx|output_dir/]")
+        print("Usage: python3 convert_dta_to_excel.py input_file.dta [output_file.xlsx|output_dir/]")
     else:
         input_file = sys.argv[1]
         output_arg = sys.argv[2] if len(sys.argv) > 2 else None
