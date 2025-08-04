@@ -1,0 +1,342 @@
+A. Identifying variables and socio-demographic information
+A1. Respondent ID______________________
+District ID
+A2. Sub-county_____________________ à predefined list
+Parish ID
+A3 Village Name_____________________ à predefined list
+
+A3i Are you currently farming maize?
+
+1 Yes
+2 No
+
+A3ii Have you farmed maize in the last three years?
+Enable if A3i = No
+
+1 Yes
+2 No
+If A3ii = No, respondent is not eligible to participate, end the interview.
+A3iii I&#39;d like to understand your relationship to household maize farming activities. Which of the
+following describes your role? Select all that apply.
+
+1 Has influence or decision-
+making making power over
+the selection of maize seed
+variety
+
+2 Manages or co-manages the
+
+farm
+
+3 Plays an active role in selling
+the maize post-harvest
+4 Has no role in the maize
+farming in my household
+
+If A3iii = 4, respondent is not eligible to participate, end the interview.
+
+A4. Gender of the respondent
+
+1 Male
+2 Female
+
+2
+
+A5. Age of the respondent (Years)_________________
+A6. Highest level of education
+
+1 No formal education
+2 Primary
+3 Secondary
+4 Post-secondary
+5 Adult education, literacy
+school or parish school
+
+A7. Marital status
+
+1 Single
+2 Married
+3 Divorced
+4 Widow
+A8. Number of people who live in your household? __________________________
+A9. Number of household members who are below 18 years of age? ______________________
+
+3
+
+B. Presentation of three maize varieties
+Enumerator: In the next phase of the survey, I will show you a number of videos that will guide you
+through the first part of the survey. The first video will explain the goal of the exercise
+B1. Male or female agrodealer randomly assigned to the participant
+
+Code Preferred person
+1 Male agro-dealer
+2 Female agro-dealer
+
+SHOW INTRODUCTION VIDEO
+Enumerator: I will show you three product concepts and for each concept there will be several
+questions.
+B2. Enumerator confirm the video numbers and order shown
+
+Code Video number
+Video 1
+Video 2
+Video 3
+
+(LOOP FOR THE THREE VIDEOS)
+SHOW THE FIRST PRODUCT CONCEPT
+
+B3a. How different do you think is this maize variety from the variety(ies) that you grew on your
+farm in the last growing season? Use a 1-5 scale ranging from very different to very similar?
+1 2 3 4 5
+Very different Different Neither similar
+nor different
+
+Similar Very similar
+
+B3b How does the description of this variety match or differ with your thoughts on the variety you
+are planning to use in the next growing season?
+_______________________________________________________________________
+B4. thinking about the description of this variety, what in the description caught your attention in a
+positive way? What did you most like?
+_______________________________________________________________________
+B5. How interested would you be in using this variety on at least on a small part of your farm if it
+were available to you for the next growing season – for the same price as you pay for your current
+variety?
+1 2 3 4 5
+Not interested at all Somewhat
+uninterested
+
+Neutral Somewhat
+interested
+
+Very interested
+
+4
+B6. How interested would you be to replace the variety(ies) you currently grow with this if it were
+available to you for the next growing season – for the same price as you pay for your current
+variety?
+1 2 3 4 5
+Not interested at all Somewhat
+uninterested
+
+Neutral Somewhat
+interested
+
+Very interested
+
+( SHOW VIDEO 2 AND 3, REPEAT THE QUESTIONS FOR PRODUCT DESCRIPTION 2 AND 3)
+Enumerator: The last video will inform you about the next steps
+SHOW FINAL VIDEO
+B7a. As requested in by the agrodealer in the video, please select your most preferred variety – that
+is, the variety that you’d be most interested in obtaining and using if it were available at your local
+agrodealer shop?
+
+Code Video number
+Video 1
+Video 2
+Video 3
+
+B7b. Please select your least preferred variety – that is, the variety that you would be least
+interesting in using if it were available in your local agrodealer shop?
+
+Code Video number
+Video 1
+Video 2
+Video 3
+B8a. What is the reason for your most preferred choice?
+_______________________________________________________________________
+B8b. What is the reason for your least preferred choice?
+_______________________________________________________________________
+
+5
+B10. We would also like to have your feedback on the videos you just saw and what you thought of
+the ranking exercise
+B10a. What did you think of the information in the videos? Was it easy or difficult to
+understand?
+1 2 3 4 5
+Very difficult to
+understand
+
+Difficult to
+understand
+
+Neutral Easy to
+understand
+
+Very easy to
+understand
+
+B10b. How trustworthy would did you consider the agro-dealer in the video to be?
+1 2 3 4 5
+Strongly untrustful Untrustful Neutral Trustful Strongly trustful
+B10c. How easy was it for you to rank the varieties based on the information provided in by
+the agrodealer in the video?
+1 2 3 4 5
+Very Difficult to rank Difficult to
+rank
+
+Neutral Easy to rank Very Easy to rank
+
+B10d. Why was this an easy or difficult task?
+_______________________________________________________________________
+B10e What information was missing that you would have considered important to know to
+make a choice between the product?
+_______________________________________________________________________
+
+B11. To be filled in by the enumerator: How much attention did the participant pay to the videos on
+a 1 – 5 scale ranging from 1 “very little attention” to 5 “a lot of attention”.
+1 2 3 4 5
+Very little attention Little
+attention
+
+Neutral Attention A lot of attention
+
+6
+
+C Overall farm questions
+C1. Total farming area of the household? ____________ Acres
+C2. Farming area of the household used for maize farming during the previous main growing season?
+____________ Acres
+C3. Looking back over last year, what crops did your household grow?
+MULTIPLE RESPONSE, please tick all
+
+1 Avocado
+2 Banana
+3 Beans
+4 Cassava
+5 Chick peas
+6 Chili
+7 Coconuts
+8 Coffee
+9 Cowpea
+10 Ground nuts
+11 Maize
+12 Millet
+13 Okra
+14 Paprika
+15 Peanuts
+16 Plantain
+17 Rice
+18 Sorghum
+19 Soybean
+20 Sugarcane
+21 Sunflower
+22 Sweet potato
+23 Tea
+24 Tobacco
+25 Tomato
+26 Yam
+27 Water Melon
+28 Wheat
+29 Other 1_____________
+30 Other 2_____________
+31 Other 3_____________
+99 None
+
+7
+
+C4. What types of livestock does your household keep in the last 12 months?
+MULTIPLE RESPONSE, please tick all
+
+1 Bees
+2 Cattle
+3 Chicken
+4 Goats
+5 Pigs
+6 Rabbits
+7 Sheep
+8 Other 1
+9 Other 2
+10 Other 3
+99 None
+
+C5. Which of the crops and livestock are most important for your household in the last 12 months?
+
+1
+2
+3
+
+C6. Thinking back over last year, how important was income earned off your farm (for example, by
+earning wages from work in town) for meeting the needs of the family?
+1 2 3 4 5
+Not important Slightly
+Important
+
+Moderately
+Important
+
+important Very important
+
+C7. Consider all the income that your family received last year from selling your crops and livestock
+AND from working off the farm. Did more money come from the sales of farm produce, or more
+from the off-farm income sources?
+
+1 Almost all from farm
+2 Most from farm
+3 Half from off-farm
+4 Most from off-farm
+5 All or almost all from off-farm
+
+8
+
+C Maize farming
+Enumerator: The following questions are focused on maize grown under your management. This
+can be joint with your husband or grown by you alone.
+D1. How many maize seasons do you normally plant within a year?
+
+1 One
+2 Two
+3 Three
+D2. Did you or someone in your family purchase maize seed in the last 5 years for your plots?
+1 Yes
+2 No
+D3. How often do you or someone in your family purchase maize seed for your plots?
+1 Every season
+2 Once every year
+3 Once every two years
+4 Once every three years
+5 Once every four years
+6 Once every five years or less
+Enumerator: The following questions are focused on the main maize growing season under your
+management, meaning the season you planted most maize. If you had two or more seasons in the
+last 12 months and there is no difference in maize production, you can discuss the last season in
+which you planted maize.
+D4a. How did you grow maize in the main growing season?
+
+1 Monocropping (nothing else was planted
+between maize rows)
+2 Intercropping with legumes (beans)
+3 Intercropping with trees or other crops
+4 Both intercropping and monocropping
+D4b. How many kgs of maize seed did you use in the main maize growing season (i.e. the season
+with the highest maize production) _______________?
+D4c How many different varieties of maize did you grow in the main maize growing season?
+_________?
+D4d Which variety(ies) did you grow in the main maize growing season? _________?
+D4e. How much of your farming land was used for growing maize in the main growing season?
+_____ Acres
+(Note in programming: This number cannot be higher than the response in C2)
+
+9
+D5. How many 90kg bags of maize did you harvest in total during in the main season from your
+farm? ________
+D6. Could you specify the use of your grain harvest?
+a. Number of grain bags sold _______
+b. Number of grain bags stored for household food consumption _______
+c. Number of grain bags given to others (schools, church,…) _______
+d. Number of grain bags used for feeding animals ___________
+e. Number of grain bags used for other (please specify:__________________):_______
+D7. What did you do with the leftover plant material?
+MULTIPLE RESPONSE, please tick all
+
+1 Left it on the field
+2 Feed for livestock
+3 Transported to other plots to use a mulch
+4 Burned in field
+5 Other
+
+Suggestions:
+At the end we need to collect contact information about the farmer including
+1. Phone number
+2. Location description
+3. GPS
